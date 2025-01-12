@@ -404,8 +404,10 @@ function getFalsyValuesCount(arr) {
  *                              [0,0,0,1,0],
  *                              [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const matrix = Array.from({ length: n }, () => new Array(n).fill(0));
+  matrix.map((item, index) => item.splice(index, 1, 1));
+  return matrix;
 }
 
 /**
@@ -460,8 +462,13 @@ function getHexRGBValues(arr) {
  *   getMaxItems([ 10, 2, 7, 5, 3, -5 ], 3) => [ 10, 7, 5 ]
  *   getMaxItems([ 10, 10, 10, 10 ], 3) => [ 10, 10, 10 ]
  */
-function getMaxItems(/* arr, n */) {
-  throw new Error('Not implemented');
+function getMaxItems(arr, n) {
+  return arr.length > 1
+    ? arr
+        .sort((a, b) => a - b)
+        .reverse()
+        .slice(0, n)
+    : arr;
 }
 
 /**
@@ -542,8 +549,8 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  return [...arr.splice(-n), ...arr];
 }
 
 /**
@@ -559,8 +566,20 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const digitNames = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  return arr.sort((a, b) => digitNames.indexOf(a) - digitNames.indexOf(b));
 }
 
 /**
@@ -582,8 +601,22 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const centerIndex = Math.round(arr.length / 2) - 1;
+  let head = [];
+  let tail = [];
+  let result = [];
+
+  if (arr.length % 2 === 0) {
+    head = arr.slice(0, centerIndex + 1);
+    tail = arr.slice(centerIndex + 1, arr.length);
+    result = [...tail, ...head];
+  } else {
+    head = arr.slice(0, centerIndex);
+    tail = arr.slice(centerIndex + 1, arr.length);
+    result = [...tail, arr[centerIndex], ...head];
+  }
+  return result;
 }
 
 module.exports = {
